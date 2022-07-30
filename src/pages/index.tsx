@@ -3,6 +3,8 @@ import React from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
 
+import { Themed } from "theme-ui";
+
 const Home: NextPage = () => {
   return (
     <div>
@@ -20,7 +22,14 @@ const Home: NextPage = () => {
           marginRight: "auto",
         }}
       >
-        <h1>Amethyst ToDo</h1>
+        <Themed.h1
+          sx={{
+            mx: "auto",
+            width: "fit-content",
+          }}
+        >
+          Amethyst ToDo
+        </Themed.h1>
       </main>
     </div>
   );
