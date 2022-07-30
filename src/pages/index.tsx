@@ -4,10 +4,18 @@ import type { NextPage } from "next";
 import Head from "next/head";
 
 import { Themed } from "theme-ui";
+import { backgroundColor } from "styled-system";
 
 const Home: NextPage = () => {
   return (
-    <div>
+    <div
+      sx={{
+        backgroundColor: "secondary",
+        minHeight: "100vh",
+        display: "flex",
+        justifyContent: "center",
+      }}
+    >
       <Head>
         <title>Amethyst ToDo</title>
         <meta name="description" content="Keeps track of your ToDo's" />
@@ -15,15 +23,19 @@ const Home: NextPage = () => {
       </Head>
 
       <main
-        style={{
-          maxWidth: "1200px",
-          marginTop: "3rem",
-          marginLeft: "auto",
-          marginRight: "auto",
+        sx={{
+          width: "100%",
+          maxWidth: "72rem",
+          marginY: ["1rem", "2rem"],
+          paddingY: ["1rem", "2rem"],
+          marginX: ["1rem", "2rem"],
+          borderRadius: ["1rem", "2rem"],
+          backgroundColor: "background",
         }}
       >
         <Themed.h1
           sx={{
+            my: "0",
             mx: "auto",
             width: "fit-content",
           }}

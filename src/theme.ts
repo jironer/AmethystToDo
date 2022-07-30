@@ -1,7 +1,7 @@
 import type { Theme } from "theme-ui";
 
 export const theme: Theme = {
-  breakpoints: ["40em", "52em", "64em"],
+  breakpoints: ["40rem", "52rem", "64rem"],
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
   fonts: {
     body: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif',
@@ -22,6 +22,7 @@ export const theme: Theme = {
     text: "#000",
     background: "#FFF",
     primary: "#9057EA",
+    secondary: "#E0DAFF",
   },
   text: {
     heading: {
@@ -39,7 +40,7 @@ export const theme: Theme = {
     h1: {
       color: "primary",
       variant: "text.heading",
-      fontSize: 5,
+      fontSize: [4, 5],
     },
     h2: {
       variant: "text.heading",
