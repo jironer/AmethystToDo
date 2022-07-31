@@ -1,9 +1,8 @@
 export async function createToDo(text: string) {
-  const ToDoObject = { open: true, text, time: new Date().getTime() };
+  const ToDoObject = { closed: false, text, time: 0 };
 
   const response = await fetch("http://localhost:3001/ToDos", {
     method: "POST",
-    mode: "cors",
     headers: {
       "Content-Type": "application/json",
     },

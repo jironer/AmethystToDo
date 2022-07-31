@@ -10,6 +10,13 @@ export type ToDoCreatorProps = {
 export function ToDoCreator({ createItemFn, placeholder }: ToDoCreatorProps) {
   const [inputVal, setInputVal] = useState<string>("");
 
+  const createToDo = async () => {
+    if (inputVal) {
+      setInputVal("");
+      await createItemFn(inputVal);
+    }
+  };
+
   return (
     <Flex
       sx={{ width: "100%", gap: "1rem", flexWrap: "wrap", fontSize: [2, 3] }}
@@ -18,6 +25,9 @@ export function ToDoCreator({ createItemFn, placeholder }: ToDoCreatorProps) {
       <Input
         value={inputVal}
         onChange={(e) => setInputVal(e.target.value)}
+        onKeyDown={async (e) => {
+          if (e.key === "Enter") createToDo();
+        }}
         sx={{ minWidth: "15rem", width: "60%", flexGrow: 10 }}
         placeholder={placeholder}
       />
@@ -28,12 +38,7 @@ export function ToDoCreator({ createItemFn, placeholder }: ToDoCreatorProps) {
           "&:hover": { bg: darken("primary", 0.1) },
           "&:active": { bg: darken("primary", 0.2) },
         }}
-        onClick={async () => {
-          if (inputVal) {
-            await createItemFn(inputVal);
-            setInputVal("");
-          }
-        }}
+        onClick={createToDo}
       >
         Add
       </Button>

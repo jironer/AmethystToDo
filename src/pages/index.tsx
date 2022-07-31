@@ -1,12 +1,74 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import React, { useCallback, useState } from "react";
 import { Box, Themed } from "theme-ui";
 
 import { ToDoCreator } from "../components/molecules/ToDoCreator";
-import { ToDoItem } from "../components/molecules/ToDoItem";
+import { ToDoItem, ToDoItemType } from "../components/molecules/ToDoItem";
+import { closeToDo } from "../utils/closeToDo";
 import { createToDo } from "../utils/createToDo";
+import { getActiveToDos } from "../utils/getActiveToDos";
+import { getClosedToDos } from "../utils/getClosedToDos";
+import { openToDo } from "../utils/openToDo";
+import { removeToDo } from "../utils/removeToDo";
 
-const Home: NextPage = () => {
+export async function getServerSideProps() {
+  const activeToDos = await getActiveToDos();
+  const closedToDos = await getClosedToDos();
+
+  return {
+    props: { activeToDos, closedToDos },
+  };
+}
+
+type Props = {
+  activeToDos: ToDoItemType[];
+  closedToDos: ToDoItemType[];
+};
+
+const Home: NextPage<Props> = ({ activeToDos, closedToDos }: Props) => {
+  const [currentActiveToDos, setCurrentActiveToDos] =
+    useState<ToDoItemType[]>(activeToDos);
+  const [currentClosedToDos, setCurrentClosedToDos] =
+    useState<ToDoItemType[]>(closedToDos);
+
+  const updateActiveToDos = async () => {
+    setCurrentActiveToDos(await getActiveToDos());
+  };
+
+  const updateClosedToDos = async () => {
+    setCurrentClosedToDos(await getClosedToDos());
+  };
+
+  const addToDo = useCallback(async (toDoText: string) => {
+    await createToDo(toDoText);
+    setCurrentActiveToDos(await getActiveToDos());
+  }, []);
+
+  const closeToDoItem = useCallback(async (toDo: ToDoItemType) => {
+    await closeToDo(toDo);
+    await updateActiveToDos();
+    await updateClosedToDos();
+  }, []);
+
+  const openToDoItem = useCallback(async (toDo: ToDoItemType) => {
+    await openToDo(toDo);
+    await updateActiveToDos();
+    await updateClosedToDos();
+  }, []);
+
+  const removeToDoItem = useCallback(async (toDo: ToDoItemType) => {
+    await removeToDo(toDo);
+    await updateActiveToDos();
+    await updateClosedToDos();
+  }, []);
+
+  const toDoStateUpdateFns = {
+    closeToDo: closeToDoItem,
+    openToDo: openToDoItem,
+    removeToDo: removeToDoItem,
+  };
+
   return (
     <div
       sx={{
@@ -47,22 +109,16 @@ const Home: NextPage = () => {
         <Box sx={{ width: "fit-content" }} mx="auto">
           <ToDoCreator
             placeholder="Enter ToDo text..."
-            createItemFn={createToDo}
+            createItemFn={addToDo}
           />
           <Themed.h2>Open</Themed.h2>
-          <ToDoItem id="my-id" name="my first ToDo" isClosed={false} />
-          <ToDoItem id="my-id2" name="my first ToDo2" isClosed={false} />
-          <ToDoItem id="my-id3" name="my first ToDo3" isClosed={false} />
-          <ToDoItem
-            id="my-id4"
-            name="my first ToDo4 which is very long"
-            isClosed={false}
-          />
+          {currentActiveToDos.map((toDo) => (
+            <ToDoItem {...toDo} {...toDoStateUpdateFns} key={toDo.id} />
+          ))}
           <Themed.h2 sx={{ opacity: 0.5 }}>Closed</Themed.h2>
-          <ToDoItem id="my-idc" name="my first ToDo" isClosed />
-          <ToDoItem id="my-id2c" name="my first ToDo2" isClosed />
-          <ToDoItem id="my-id3c" name="my first ToDo3" isClosed />
-          <ToDoItem id="my-id4c" name="my first ToDo4" isClosed />
+          {currentClosedToDos.map((toDo) => (
+            <ToDoItem {...toDo} {...toDoStateUpdateFns} key={toDo.id} />
+          ))}
         </Box>
       </main>
     </div>
