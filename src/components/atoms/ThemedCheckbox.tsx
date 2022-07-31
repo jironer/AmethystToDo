@@ -1,23 +1,20 @@
-import React from "react";
-
 import { getColor } from "@theme-ui/color";
-import type { SxProp } from "theme-ui";
+import React from "react";
 
 import { theme } from "../../theme";
 
 export type CheckboxProps = Omit<
   React.ClassAttributes<HTMLInputElement> &
-    React.InputHTMLAttributes<HTMLInputElement> &
-    SxProp,
+    React.InputHTMLAttributes<HTMLInputElement>,
   "type"
 >;
 
-export function Checkbox({ sx, ...restProps }: CheckboxProps) {
+export function ThemedCheckbox({ ...restProps }: CheckboxProps) {
   return (
     <input
       type="checkbox"
       sx={{ accentColor: getColor(theme, "primary") }}
       {...restProps}
-    ></input>
+    />
   );
 }

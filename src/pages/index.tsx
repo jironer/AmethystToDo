@@ -1,10 +1,8 @@
-import React from "react";
-
 import type { NextPage } from "next";
 import Head from "next/head";
+import { Box, Themed } from "theme-ui";
 
-import { Themed, Flex, Box } from "theme-ui";
-
+import { ToDoCreator } from "../components/molecules/ToDoCreator";
 import { ToDoItem } from "../components/molecules/ToDoItem";
 
 const Home: NextPage = () => {
@@ -46,13 +44,16 @@ const Home: NextPage = () => {
           Amethyst ToDo
         </Themed.h1>
         <Box sx={{ width: "fit-content" }} mx="auto">
+          <ToDoCreator placeholder="Enter ToDo text..." />
           <Themed.h2>Open</Themed.h2>
           <ToDoItem id="my-id" name="my first ToDo" isClosed={false} />
           <ToDoItem id="my-id2" name="my first ToDo2" isClosed={false} />
           <ToDoItem id="my-id3" name="my first ToDo3" isClosed={false} />
-          <ToDoItem id="my-id4" name="my first ToDo4" isClosed={false} />
-        </Box>
-        <Box sx={{ width: "fit-content" }} mx="auto">
+          <ToDoItem
+            id="my-id4"
+            name="my first ToDo4 which is very long"
+            isClosed={false}
+          />
           <Themed.h2 sx={{ opacity: 0.5 }}>Closed</Themed.h2>
           <ToDoItem id="my-idc" name="my first ToDo" isClosed />
           <ToDoItem id="my-id2c" name="my first ToDo2" isClosed />

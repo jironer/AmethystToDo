@@ -1,8 +1,6 @@
-import React from "react";
+import { Flex, Label } from "theme-ui";
 
-import { Box, Label } from "theme-ui";
-
-import { Checkbox } from "../atoms/Checkbox";
+import { ThemedCheckbox } from "../atoms/ThemedCheckbox";
 
 export type ToDoItemProps = {
   id: string;
@@ -12,7 +10,7 @@ export type ToDoItemProps = {
 
 export function ToDoItem({ id, name, isClosed }: ToDoItemProps) {
   return (
-    <Box
+    <Flex
       sx={{
         width: "fit-content",
         opacity: isClosed ? "0.5" : undefined,
@@ -20,14 +18,17 @@ export function ToDoItem({ id, name, isClosed }: ToDoItemProps) {
       }}
       my="0.75rem"
     >
-      <Checkbox sx={{ width: "1.4rem", height: "1.4rem" }} id={id}></Checkbox>
+      <ThemedCheckbox
+        sx={{ width: "1.4rem", height: "1.4rem", my: "auto" }}
+        id={id}
+      />
       <Label
         htmlFor={id}
-        sx={{ fontSize: [3, 4], display: "inline", lineHeight: 1 }}
+        sx={{ fontSize: [3, 4], display: "inline" }}
         ml="1rem"
       >
         {name}
       </Label>
-    </Box>
+    </Flex>
   );
 }
