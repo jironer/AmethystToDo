@@ -9,8 +9,8 @@
     "lint": "next lint",
     "next-start": "next start",
     "next-dev": "next dev",
-    "create-db": "echo {}>db.json",
-    "watch-db": "json-server --watch db.json",
+    "create-db": "cp jsonServer/initialDB.json jsonServer/db.json",
+    "watch-db": "json-server -c jsonServer/json-server.json --watch jsonServer/db.json",
     "start-db": "run-s create-db watch-db",
     "prettier": "prettier --write .",
     "precommit": "run-s lint prettier"

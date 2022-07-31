@@ -4,6 +4,7 @@ import { Box, Themed } from "theme-ui";
 
 import { ToDoCreator } from "../components/molecules/ToDoCreator";
 import { ToDoItem } from "../components/molecules/ToDoItem";
+import { createToDo } from "../utils/createToDo";
 
 const Home: NextPage = () => {
   return (
@@ -46,9 +47,7 @@ const Home: NextPage = () => {
         <Box sx={{ width: "fit-content" }} mx="auto">
           <ToDoCreator
             placeholder="Enter ToDo text..."
-            createItemFn={async (ToDoText: string) => {
-              console.log("hello");
-            }}
+            createItemFn={createToDo}
           />
           <Themed.h2>Open</Themed.h2>
           <ToDoItem id="my-id" name="my first ToDo" isClosed={false} />

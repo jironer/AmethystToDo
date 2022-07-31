@@ -8,7 +8,7 @@ export type ToDoCreatorProps = {
 };
 
 export function ToDoCreator({ createItemFn, placeholder }: ToDoCreatorProps) {
-  const [inputVal, setInputVal] = useState<string | undefined>(undefined);
+  const [inputVal, setInputVal] = useState<string>("");
 
   return (
     <Flex
