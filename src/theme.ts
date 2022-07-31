@@ -23,6 +23,7 @@ export const theme: Theme = {
     background: "#FFF",
     primary: "#9057EA",
     secondary: "#E0DAFF",
+    highlight: "#000",
   },
   text: {
     heading: {
@@ -44,7 +45,9 @@ export const theme: Theme = {
     },
     h2: {
       variant: "text.heading",
-      fontSize: 4,
+      mt: "2rem",
+      mb: 0,
+      fontSize: [3, 4],
     },
     h3: {
       variant: "text.heading",

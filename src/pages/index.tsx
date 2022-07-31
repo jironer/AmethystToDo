@@ -3,8 +3,9 @@ import React from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
 
-import { Themed } from "theme-ui";
-import { backgroundColor } from "styled-system";
+import { Themed, Flex, Box } from "theme-ui";
+
+import { ToDoItem } from "../components/molecules/ToDoItem";
 
 const Home: NextPage = () => {
   return (
@@ -29,19 +30,35 @@ const Home: NextPage = () => {
           marginY: ["1rem", "2rem"],
           paddingY: ["1rem", "2rem"],
           marginX: ["1rem", "2rem"],
+          paddingX: ["1rem", "2rem"],
           borderRadius: ["1rem", "2rem"],
           backgroundColor: "background",
         }}
       >
         <Themed.h1
           sx={{
-            my: "0",
+            mt: 0,
+            mb: "1rem",
             mx: "auto",
             width: "fit-content",
           }}
         >
           Amethyst ToDo
         </Themed.h1>
+        <Box sx={{ width: "fit-content" }} mx="auto">
+          <Themed.h2>Open</Themed.h2>
+          <ToDoItem id="my-id" name="my first ToDo" isClosed={false} />
+          <ToDoItem id="my-id2" name="my first ToDo2" isClosed={false} />
+          <ToDoItem id="my-id3" name="my first ToDo3" isClosed={false} />
+          <ToDoItem id="my-id4" name="my first ToDo4" isClosed={false} />
+        </Box>
+        <Box sx={{ width: "fit-content" }} mx="auto">
+          <Themed.h2 sx={{ opacity: 0.5 }}>Closed</Themed.h2>
+          <ToDoItem id="my-idc" name="my first ToDo" isClosed />
+          <ToDoItem id="my-id2c" name="my first ToDo2" isClosed />
+          <ToDoItem id="my-id3c" name="my first ToDo3" isClosed />
+          <ToDoItem id="my-id4c" name="my first ToDo4" isClosed />
+        </Box>
       </main>
     </div>
   );
