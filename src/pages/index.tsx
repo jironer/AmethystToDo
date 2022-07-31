@@ -44,7 +44,12 @@ const Home: NextPage = () => {
           Amethyst ToDo
         </Themed.h1>
         <Box sx={{ width: "fit-content" }} mx="auto">
-          <ToDoCreator placeholder="Enter ToDo text..." />
+          <ToDoCreator
+            placeholder="Enter ToDo text..."
+            createItemFn={async (ToDoText: string) => {
+              console.log("hello");
+            }}
+          />
           <Themed.h2>Open</Themed.h2>
           <ToDoItem id="my-id" name="my first ToDo" isClosed={false} />
           <ToDoItem id="my-id2" name="my first ToDo2" isClosed={false} />
