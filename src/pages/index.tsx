@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import { Box, Themed } from "theme-ui";
 
 import { ToDoCreator } from "../components/molecules/ToDoCreator";
@@ -49,30 +49,30 @@ const Home: NextPage<Props> = ({ activeToDos, closedToDos }: Props) => {
     await updateClosedToDos();
   };
 
-  const addToDo = useCallback(async (toDoText: string) => {
+  const addToDo = async (toDoText: string) => {
     await createToDo(toDoText);
     await updateActiveToDos();
-  }, []);
+  };
 
-  const closeToDoItem = useCallback(async (toDo: ToDoItemType) => {
+  const closeToDoItem = async (toDo: ToDoItemType) => {
     await closeToDo(toDo);
     await updateAllToDos();
-  }, []);
+  };
 
-  const openToDoItem = useCallback(async (toDo: ToDoItemType) => {
+  const openToDoItem = async (toDo: ToDoItemType) => {
     await openToDo(toDo);
     await updateAllToDos();
-  }, []);
+  };
 
-  const removeToDoItem = useCallback(async (toDo: ToDoItemType) => {
+  const removeToDoItem = async (toDo: ToDoItemType) => {
     await removeToDo(toDo);
     await updateAllToDos();
-  }, []);
+  };
 
-  const updateToDoItem = useCallback(async (toDo: ToDoItemType) => {
+  const updateToDoItem = async (toDo: ToDoItemType) => {
     await updateToDo(toDo);
     await updateAllToDos();
-  }, []);
+  };
 
   const toDoStateUpdateFns = {
     closeToDo: closeToDoItem,
