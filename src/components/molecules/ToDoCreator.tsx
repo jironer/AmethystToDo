@@ -3,12 +3,19 @@ import React, { useState } from "react";
 import { Button, Flex, Input } from "theme-ui";
 
 export type ToDoCreatorProps = {
-  placeholder: string;
+  placeholder?: string;
+  buttonText?: string;
+  defaultValue?: string;
   createItemFn: (ToDoText: string) => Promise<void>;
 };
 
-export function ToDoCreator({ createItemFn, placeholder }: ToDoCreatorProps) {
-  const [inputVal, setInputVal] = useState<string>("");
+export function ToDoCreator({
+  createItemFn,
+  placeholder = "Enter ToDo text...",
+  buttonText = "Add",
+  defaultValue = "",
+}: ToDoCreatorProps) {
+  const [inputVal, setInputVal] = useState<string>(defaultValue);
 
   const createToDo = async () => {
     if (inputVal) {
@@ -40,7 +47,7 @@ export function ToDoCreator({ createItemFn, placeholder }: ToDoCreatorProps) {
         }}
         onClick={createToDo}
       >
-        Add
+        {buttonText}
       </Button>
     </Flex>
   );

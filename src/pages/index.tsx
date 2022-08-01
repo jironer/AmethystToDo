@@ -11,6 +11,7 @@ import { getActiveToDos } from "../utils/getActiveToDos";
 import { getClosedToDos } from "../utils/getClosedToDos";
 import { openToDo } from "../utils/openToDo";
 import { removeToDo } from "../utils/removeToDo";
+import { updateToDo } from "../utils/updateToDo";
 
 export async function getServerSideProps() {
   const activeToDos = await getActiveToDos();
@@ -40,33 +41,41 @@ const Home: NextPage<Props> = ({ activeToDos, closedToDos }: Props) => {
     setCurrentClosedToDos(await getClosedToDos());
   };
 
+  const updateAllToDos = async () => {
+    await updateActiveToDos();
+    await updateClosedToDos();
+  };
+
   const addToDo = useCallback(async (toDoText: string) => {
     await createToDo(toDoText);
-    setCurrentActiveToDos(await getActiveToDos());
+    await updateActiveToDos();
   }, []);
 
   const closeToDoItem = useCallback(async (toDo: ToDoItemType) => {
     await closeToDo(toDo);
-    await updateActiveToDos();
-    await updateClosedToDos();
+    await updateAllToDos();
   }, []);
 
   const openToDoItem = useCallback(async (toDo: ToDoItemType) => {
     await openToDo(toDo);
-    await updateActiveToDos();
-    await updateClosedToDos();
+    await updateAllToDos();
   }, []);
 
   const removeToDoItem = useCallback(async (toDo: ToDoItemType) => {
     await removeToDo(toDo);
-    await updateActiveToDos();
-    await updateClosedToDos();
+    await updateAllToDos();
+  }, []);
+
+  const updateToDoItem = useCallback(async (toDo: ToDoItemType) => {
+    await updateToDo(toDo);
+    await updateAllToDos();
   }, []);
 
   const toDoStateUpdateFns = {
     closeToDo: closeToDoItem,
     openToDo: openToDoItem,
     removeToDo: removeToDoItem,
+    updateToDo: updateToDoItem,
   };
 
   return (
@@ -107,10 +116,7 @@ const Home: NextPage<Props> = ({ activeToDos, closedToDos }: Props) => {
           Amethyst ToDo
         </Themed.h1>
         <Box sx={{ width: "fit-content" }} mx="auto">
-          <ToDoCreator
-            placeholder="Enter ToDo text..."
-            createItemFn={addToDo}
-          />
+          <ToDoCreator createItemFn={addToDo} />
           <Themed.h2>Open</Themed.h2>
           {currentActiveToDos.map((toDo) => (
             <ToDoItem {...toDo} {...toDoStateUpdateFns} key={toDo.id} />

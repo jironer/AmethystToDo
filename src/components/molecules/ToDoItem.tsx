@@ -1,7 +1,9 @@
+import { keyframes } from "@emotion/react";
 import React, { useRef, useState } from "react";
 import { Flex, Label } from "theme-ui";
 
 import { ThemedCheckbox } from "../atoms/ThemedCheckbox";
+import { ToDoCreator } from "./ToDoCreator";
 
 export type ToDoItemType = {
   id: number;
@@ -14,7 +16,13 @@ export type ToDoItemProps = ToDoItemType & {
   closeToDo: (toDo: ToDoItemType) => Promise<void>;
   openToDo: (toDo: ToDoItemType) => Promise<void>;
   removeToDo: (toDo: ToDoItemType) => Promise<void>;
+  updateToDo: (toDo: ToDoItemType) => Promise<void>;
 };
+
+const scaleIn = keyframes({
+  from: { transform: "scaleY(0)" },
+  to: { transform: "scaleY(1)" },
+});
 
 export function ToDoItem({
   id,
@@ -24,9 +32,24 @@ export function ToDoItem({
   closeToDo,
   openToDo,
   removeToDo,
+  updateToDo,
 }: ToDoItemProps) {
   const [renderRemoveButton, setRenderRemoveButton] = useState<boolean>(false);
+  const [isInEditMode, setIsInEditMode] = useState<boolean>(false);
   const itemRef = useRef<HTMLDivElement>(null);
+
+  if (isInEditMode)
+    return (
+      <ToDoCreator
+        createItemFn={async (updatedText) => {
+          updateToDo({ id, closed, text: updatedText, time });
+          setIsInEditMode(false);
+        }}
+        buttonText="Edit"
+        placeholder="Enter new ToDo text..."
+        defaultValue={text}
+      />
+    );
 
   return (
     <Flex
@@ -34,6 +57,7 @@ export function ToDoItem({
       sx={{
         opacity: closed ? "0.5" : undefined,
         width: "100%",
+        animation: `${scaleIn} 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both`,
       }}
       my="0.75rem"
       onMouseEnter={() => setRenderRemoveButton(true)}
@@ -76,6 +100,12 @@ export function ToDoItem({
             flexGrow: 10,
             textDecoration: closed ? "line-through" : undefined,
             mr: renderRemoveButton ? 0 : [0, "6rem"],
+          }}
+          onClick={(e) => {
+            if (!closed) {
+              e.preventDefault;
+              setIsInEditMode(true);
+            }
           }}
           ml={["0.5rem", "1rem"]}
         >
