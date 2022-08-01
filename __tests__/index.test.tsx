@@ -1,14 +1,12 @@
 // __tests__/index.test.jsx
 import "@testing-library/jest-dom";
-import { act, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { ThemeProvider } from "theme-ui";
 
 import Home from "../src/pages/index";
 import { theme } from "../src/theme";
 
 describe("Home", () => {
-  global.innerWidth = 1200;
-
   it("Renders empty page with headings only", () => {
     render(
       <ThemeProvider theme={theme}>
