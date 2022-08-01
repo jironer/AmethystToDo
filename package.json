@@ -6,7 +6,7 @@
     "postinstall": "husky install",
     "dev": "run-p next-dev start-db",
     "build": "next build",
-    "start": "next start",
+    "start": "run-p next-start start-db",
     "lint": "next lint",
     "test": "jest",
     "next-start": "next start",

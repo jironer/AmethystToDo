@@ -12,6 +12,7 @@ import { getClosedToDos } from "../utils/getClosedToDos";
 import { openToDo } from "../utils/openToDo";
 import { removeToDo } from "../utils/removeToDo";
 import { updateToDo } from "../utils/updateToDo";
+import { WithLogging } from "../utils/withLogging";
 
 export async function getServerSideProps() {
   const activeToDos = await getActiveToDos();
@@ -26,6 +27,8 @@ type Props = {
   activeToDos: ToDoItemType[];
   closedToDos: ToDoItemType[];
 };
+
+const ToDoItemWithLoggin = WithLogging(ToDoItem);
 
 const Home: NextPage<Props> = ({ activeToDos, closedToDos }: Props) => {
   const [currentActiveToDos, setCurrentActiveToDos] =
@@ -119,11 +122,19 @@ const Home: NextPage<Props> = ({ activeToDos, closedToDos }: Props) => {
           <ToDoCreator createItemFn={addToDo} />
           <Themed.h2>Open</Themed.h2>
           {currentActiveToDos.map((toDo) => (
-            <ToDoItem {...toDo} {...toDoStateUpdateFns} key={toDo.id} />
+            <ToDoItemWithLoggin
+              {...toDo}
+              {...toDoStateUpdateFns}
+              key={toDo.id}
+            />
           ))}
           <Themed.h2 sx={{ opacity: 0.5 }}>Closed</Themed.h2>
           {currentClosedToDos.map((toDo) => (
-            <ToDoItem {...toDo} {...toDoStateUpdateFns} key={toDo.id} />
+            <ToDoItemWithLoggin
+              {...toDo}
+              {...toDoStateUpdateFns}
+              key={toDo.id}
+            />
           ))}
         </Box>
       </main>
