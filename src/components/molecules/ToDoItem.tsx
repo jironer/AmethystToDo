@@ -27,7 +27,7 @@ const scaleIn = keyframes({
 export function ToDoItem({
   id,
   text,
-  closed = true,
+  closed = false,
   time,
   closeToDo,
   openToDo,
@@ -85,7 +85,7 @@ export function ToDoItem({
       <Flex
         sx={{
           width: "100%",
-          justifyContent: "space-betwen",
+          justifyContent: "space-between",
           flexWrap: "wrap",
           alignItems: "center",
         }}

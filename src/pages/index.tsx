@@ -28,7 +28,7 @@ type Props = {
   closedToDos: ToDoItemType[];
 };
 
-const ToDoItemWithLoggin = WithLogging(ToDoItem);
+const ToDoItemWithLogging = WithLogging(ToDoItem);
 
 const Home: NextPage<Props> = ({ activeToDos, closedToDos }: Props) => {
   const [currentActiveToDos, setCurrentActiveToDos] =
@@ -122,7 +122,7 @@ const Home: NextPage<Props> = ({ activeToDos, closedToDos }: Props) => {
           <ToDoCreator createItemFn={addToDo} />
           <Themed.h2>Open</Themed.h2>
           {currentActiveToDos.map((toDo) => (
-            <ToDoItemWithLoggin
+            <ToDoItemWithLogging
               {...toDo}
               {...toDoStateUpdateFns}
               key={toDo.id}
@@ -130,7 +130,7 @@ const Home: NextPage<Props> = ({ activeToDos, closedToDos }: Props) => {
           ))}
           <Themed.h2 sx={{ opacity: 0.5 }}>Closed</Themed.h2>
           {currentClosedToDos.map((toDo) => (
-            <ToDoItemWithLoggin
+            <ToDoItemWithLogging
               {...toDo}
               {...toDoStateUpdateFns}
               key={toDo.id}

@@ -3,8 +3,8 @@ import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 import { ThemeProvider } from "theme-ui";
 
-import Home from "../src/pages/index";
-import { theme } from "../src/theme";
+import { theme } from "../../theme";
+import Home from "../index";
 
 describe("Home", () => {
   it("Renders empty page with headings only", () => {
