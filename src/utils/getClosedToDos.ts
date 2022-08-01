@@ -1,5 +1,6 @@
 import { ToDoItemType } from "../components/molecules/ToDoItem";
 
+// Gets closed ToDos sorted according to requirements
 export async function getClosedToDos(): Promise<ToDoItemType[]> {
   const data = await fetch(
     "http://localhost:3001/ToDos?closed=true&_sort=time&_order=desc",
