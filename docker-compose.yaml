@@ -1,0 +1,24 @@
+services:
+  react_client:
+    container_name: react_client
+    restart: 'always'
+    build: ./react_client
+    env_file:
+      - .env
+    ports:
+      - 3000:3000
+    depends_on:
+      - mongoDB
+
+  mongoDB:
+    image: 'mongo'
+    container_name: 'mongoDB'
+    env_file:
+      - .env
+    volumes:
+      - ./mongoVolume:/data/db
+    ports:
+      - ${MONGO_PORT}:${MONGO_PORT}
+
+volumes: 
+ mongoVolume: {}

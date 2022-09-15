@@ -3,8 +3,8 @@ import "@testing-library/jest-dom";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { ThemeProvider } from "theme-ui";
 
-import { theme } from "../../../theme";
-import { ToDoCreator } from "../ToDoCreator";
+import { ToDoCreator } from "../src/components/molecules/ToDoCreator";
+import { theme } from "../src/theme";
 
 describe("ToDoCreator", () => {
   it("Renders input and button with text", () => {

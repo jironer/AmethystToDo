@@ -9,14 +9,26 @@ import { closeToDo } from "../utils/closeToDo";
 import { createToDo } from "../utils/createToDo";
 import { getActiveToDos } from "../utils/getActiveToDos";
 import { getClosedToDos } from "../utils/getClosedToDos";
+import { connectToDatabase } from "../utils/mongodb";
 import { openToDo } from "../utils/openToDo";
 import { removeToDo } from "../utils/removeToDo";
 import { updateToDo } from "../utils/updateToDo";
 import { WithLogging } from "../utils/withLogging";
 
 export async function getServerSideProps() {
-  const activeToDos = await getActiveToDos();
-  const closedToDos = await getClosedToDos();
+  const { db } = await connectToDatabase();
+
+  const activeToDos = await db
+    .collection("ToDos")
+    .find({ closed: false })
+    .sort({ text: 1 })
+    .toArray();
+
+  const closedToDos = await db
+    .collection("ToDos")
+    .find({ closed: true })
+    .sort({ time: 1 })
+    .toArray();
 
   return {
     props: { activeToDos, closedToDos },
